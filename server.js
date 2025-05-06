@@ -1,21 +1,32 @@
 import express from 'express';
-import { createServer } from 'http';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import http from 'http';
+import cors from 'cors';
 import { Server } from 'socket.io';
+import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
-const server = createServer(app);
-const io = new Server(server);
-
 const DB_PATH = path.join(__dirname, 'db', 'items.json');
 
-let materials = [];
+const app = express();
+app.use(cors({
+    origin: "https://mooor.vercel.app",
+    methods: ["GET", "POST"]
+}));
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: "https://mooor.vercel.app",
+        methods: ["GET", "POST"]
+    }
+});
+
+let materials = [];
 try {
     const data = fs.readFileSync(DB_PATH, 'utf-8');
     materials = JSON.parse(data);
@@ -29,10 +40,9 @@ function saveMaterials() {
     });
 }
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 io.on('connection', socket => {
     console.log('🟢 Cliente conectado');
+
     socket.emit('updateList', materials);
 
     socket.on('addItem', text => {
@@ -61,7 +71,7 @@ io.on('connection', socket => {
     });
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+    console.log(`Servidor escuchando en puerto ${PORT}`);
 });
