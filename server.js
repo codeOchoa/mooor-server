@@ -1,11 +1,15 @@
-const express = require('express');
-const http = require('http');
-const path = require('path');
-const fs = require('fs');
-const { Server } = require('socket.io');
+import express from 'express';
+import { createServer } from 'http';
+import path from 'path';
+import { fileURLToPath } from 'fs';
+import { Server } from 'socket.io';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server);
 
 const DB_PATH = path.join(__dirname, 'db', 'items.json');
