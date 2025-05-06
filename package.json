@@ -1,0 +1,31 @@
+{
+    "name": "mooor-server",
+    "version": "1.0.2",
+    "description": "WebSocket",
+    "keywords": [
+        "travel",
+        "guide",
+        "friends",
+        "mockup"
+    ],
+    "homepage": "https://github.com/codeOchoa/mooor#readme",
+    "bugs": {
+        "url": "https://github.com/codeOchoa/mooor/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/codeOchoa/mooor.git"
+    },
+    "license": "ISC",
+    "author": "codeOchoa",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^5.1.0",
+        "socket.io": "^4.8.1"
+    }
+}
