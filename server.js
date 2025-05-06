@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
 import path from 'path';
-import { fileURLToPath } from 'fs';
+import { fileURLToPath } from 'url';
 import { Server } from 'socket.io';
 import fs from 'fs';
 
